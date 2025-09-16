@@ -1,6 +1,7 @@
 package com.notes.app.Scribler.DTO;
 
 import com.notes.app.Scribler.Entity.Note;
+import com.notes.app.Scribler.Entity.Tenant;
 import com.notes.app.Scribler.Entity.User;
 import com.notes.app.Scribler.enums.SubType;
 import lombok.Data;
@@ -23,5 +24,15 @@ public class TenantDto {
         this.subType = subType;
         this.users = users;
         this.notes = notes;
+    }
+
+
+    public TenantDto(Tenant addedTenant) {
+        this.id = addedTenant.getId();
+        this.name = addedTenant.getName();
+        this.slug = addedTenant.getSlug();
+        this.subType = addedTenant.getSubType();
+        this.users = addedTenant.getUsers();
+        this.notes = addedTenant.getNotes();
     }
 }

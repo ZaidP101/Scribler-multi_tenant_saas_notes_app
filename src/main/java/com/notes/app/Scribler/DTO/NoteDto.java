@@ -1,5 +1,6 @@
 package com.notes.app.Scribler.DTO;
 
+import com.notes.app.Scribler.Entity.Note;
 import com.notes.app.Scribler.Entity.Tenant;
 import lombok.Data;
 
@@ -23,6 +24,16 @@ public class NoteDto {
         this.updatedAt = updatedAt;
         this.createdBy = createdBy;
         this.tenant = tenant;
+    }
+
+    public NoteDto(Note addNote) {
+        this.id = addNote.getId();
+        this.title = addNote.getTitle();
+        this.content = addNote.getContent();
+        this.createdAt = addNote.getCreatedAt();
+        this.updatedAt = addNote.getUpdatedAt();
+        this.createdBy = addNote.getCreatedBy();
+        this.tenant = addNote.getTenant();
     }
 }
 

@@ -1,5 +1,6 @@
 package com.notes.app.Scribler.DTO;
 
+import com.notes.app.Scribler.Entity.User;
 import com.notes.app.Scribler.enums.Role;
 import lombok.Data;
 
@@ -19,5 +20,14 @@ public class UserDto {
         this.email = email;
         this.name = name;
         this.id = id;
+    }
+
+    public UserDto(User user) {
+        this.role = user.getRole();
+        this.tenant_id = user.getTenant().getId();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.name = user.getName();
+        this.id = user.getId();
     }
 }

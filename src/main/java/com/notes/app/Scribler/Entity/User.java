@@ -3,9 +3,14 @@ package com.notes.app.Scribler.Entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.notes.app.Scribler.enums.Role;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -52,10 +57,13 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-    public Tenant getTenant() {
-        return tenant;
-    }
+    public Tenant getTenant() {return tenant;}
     public void setTenant(Tenant tenant) {
         this.tenant = tenant;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 }

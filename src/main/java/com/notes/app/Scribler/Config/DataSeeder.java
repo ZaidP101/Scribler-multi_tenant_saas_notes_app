@@ -8,6 +8,7 @@ import com.notes.app.Scribler.Repository.UserRepository;
 import com.notes.app.Scribler.enums.Role;
 import com.notes.app.Scribler.enums.SubType;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -18,10 +19,13 @@ public class DataSeeder  implements CommandLineRunner {
     private  final NoteRepository noteRepository;
     private final TenantRepository tenantRepository;
 
-    public DataSeeder(UserRepository userRepository, NoteRepository noteRepository, TenantRepository tenantRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public DataSeeder(UserRepository userRepository, NoteRepository noteRepository, TenantRepository tenantRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.noteRepository = noteRepository;
         this.tenantRepository = tenantRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -45,28 +49,28 @@ public class DataSeeder  implements CommandLineRunner {
         User adminAcme = new User();
         adminAcme.setName("adminAcme");
         adminAcme.setEmail("admin@acme.test");
-        adminAcme.setPassword("admin123");
+        adminAcme.setPassword(passwordEncoder.encode("admin123"));
         adminAcme.setRole(Role.ADMIN);
         adminAcme.setTenant(acme);
 
         User memberAcme = new User();
         memberAcme.setName("memberAcme");
         memberAcme.setEmail("user@acme.test");
-        memberAcme.setPassword("member123");
+        memberAcme.setPassword(passwordEncoder.encode("member123"));
         memberAcme.setRole(Role.MEMBER);
         memberAcme.setTenant(acme);
 
         User adminGlobex = new User();
         adminGlobex.setName("adminGlobex");
         adminGlobex.setEmail("admin@globex.test");
-        adminGlobex.setPassword("admin123");
+        adminGlobex.setPassword(passwordEncoder.encode("admin123"));
         adminGlobex.setRole(Role.ADMIN);
         adminGlobex.setTenant(globex);
 
         User memberGlobex = new User();
         memberGlobex.setName("memberGlobex");
         memberGlobex.setEmail("user@globex.test");
-        memberGlobex.setPassword("member123");
+        memberGlobex.setPassword(passwordEncoder.encode("member123"));
         memberGlobex.setRole(Role.MEMBER);
         memberGlobex.setTenant(globex);
 
