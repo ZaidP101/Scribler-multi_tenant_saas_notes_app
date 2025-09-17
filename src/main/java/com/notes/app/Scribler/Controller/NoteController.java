@@ -5,6 +5,7 @@ import com.notes.app.Scribler.DTO.NoteDto;
 import com.notes.app.Scribler.Entity.Note;
 import com.notes.app.Scribler.Service.NoteService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,14 @@ public class NoteController {
         this.noteService = noteService;
     }
 
+    @PreAuthorize("hasRole('MEMBER') OR hasRole('ADMIN')")
     @PostMapping("/create")
     public NoteDto createNote(@RequestBody @Valid AddNoteDto addNoteDto){
         NoteDto noteDto = noteService.createNote(addNoteDto);
         return noteDto;
     }
 
+    @PreAuthorize("hasRole('MEMBER') OR hasRole('ADMIN')")
     @GetMapping("/allNotes/{tenant_id}")
     public List<NoteDto> getAllNotes(@PathVariable Long tenant_id){
         return noteService.getAllNotes(tenant_id);
