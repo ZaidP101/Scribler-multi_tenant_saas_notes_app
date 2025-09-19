@@ -84,3 +84,27 @@ It demonstrates a **production-style architecture** combining **Core Java concep
   @PreAuthorize("hasRole('ADMIN')")
   @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
   ```
+
+### Authentication
+
+- Stateless session management with **JWT tokens**.
+- Tokens carry **user ID**, **role**, and **tenant info**.
+- Used by **Spring Security filters** to grant/deny access.
+
+---
+
+### Subscription Gating
+
+- **FREE plan tenants** → limited features (like note creation caps).
+- **PRO plan tenants** → full feature set.
+- **Subscription upgrade endpoint** allows plan transitions.
+
+---
+
+### Key Features
+
+- **Strict tenant isolation**: No user can access another tenant’s data.
+- **JWT authentication**: Secure, stateless access.
+- **Role-based permissions**: Admins manage tenants, Members focus on notes.
+- **Dynamic subscription logic**: Business rules differ for Free vs Pro tenants.
+- **Clean API design** with DTOs, validations, and service abstractions.
