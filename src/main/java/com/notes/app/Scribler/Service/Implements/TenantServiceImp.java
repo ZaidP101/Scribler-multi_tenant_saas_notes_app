@@ -22,6 +22,9 @@ public class TenantServiceImp implements TenantService {
 
     @Override
     public TenantDto addTenant(AddTenantDto addTenantDto) {
+        if (tenantRepository.findBySlug(addTenantDto.getSlug()) != null) {
+            throw new IllegalArgumentException("Tenant with slug '" + addTenantDto.getSlug() + "' already exists");
+        }
         Tenant tenant = new Tenant();
         tenant.setName(addTenantDto.getName());
         tenant.setSlug(addTenantDto.getSlug());
@@ -33,8 +36,11 @@ public class TenantServiceImp implements TenantService {
     @Override
     public TenantDto upgradeTenant(String slug) {
         Tenant tenant = tenantRepository.findBySlug(slug);
+        if (tenant == null) {
+            throw new IllegalArgumentException("Tenant not found with slug: " + slug);
+        }
         tenant.setSubType(SubType.PRO);
-         Tenant updatesSubType  =  tenantRepository.save(tenant);
+         Tenant updatesSubType  = tenantRepository.save(tenant);
          return new TenantDto(updatesSubType);
     }
 
@@ -51,6 +57,9 @@ public class TenantServiceImp implements TenantService {
     @Override
     public TenantDto getTenantBySlug(String slug) {
         Tenant tenant = tenantRepository.findBySlug(slug);
+        if (tenant == null) {
+            throw new IllegalArgumentException("Tenant not found with slug: " + slug);
+        }
         TenantDto tenantDto = new TenantDto(tenant);
         return tenantDto;
     }

@@ -31,7 +31,7 @@ public class TenantController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/allTenants")
+    @GetMapping("/all")
     public List<TenantDto> getAllTenants(){
         return tenantService.getAllRenants();
     }

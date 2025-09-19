@@ -32,7 +32,7 @@ public class NoteDto {
         this.content = addNote.getContent();
         this.createdAt = addNote.getCreatedAt();
         this.updatedAt = addNote.getUpdatedAt();
-        this.createdBy = addNote.getCreatedBy();
+        this.createdBy = addNote.getCreatedBy().getId();
         this.tenant = addNote.getTenant();
     }
 }

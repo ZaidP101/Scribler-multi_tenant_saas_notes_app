@@ -4,6 +4,12 @@ import lombok.Data;
 
 @Data
 public class AddTenantDto {
+    private String name;
+    private String slug;
+    public AddTenantDto(String name, String slug) {
+        this.name = name;
+        this.slug = slug;
+    }
     public String getName() {
         return name;
     }
@@ -16,10 +22,5 @@ public class AddTenantDto {
     public void setSlug(String slug) {
         this.slug = slug;
     }
-    private String name;
-    private String slug;
-    public AddTenantDto(String name, String slug) {
-        this.name = name;
-        this.slug = slug;
-    }
+
 }

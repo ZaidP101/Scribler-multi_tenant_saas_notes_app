@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-public interface NoteService {
+public interface    NoteService {
     NoteDto createNote(@Valid AddNoteDto addNoteDto);
 
     List<NoteDto> getAllNotes(Long tenantId);

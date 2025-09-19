@@ -3,8 +3,11 @@ package com.notes.app.Scribler.Controller;
 import com.notes.app.Scribler.DTO.AddNoteDto;
 import com.notes.app.Scribler.DTO.NoteDto;
 import com.notes.app.Scribler.Entity.Note;
+import com.notes.app.Scribler.Entity.User;
 import com.notes.app.Scribler.Service.NoteService;
+import com.notes.app.Scribler.Service.Security.AuthService;
 import jakarta.validation.Valid;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,36 +18,41 @@ import java.util.Map;
 @RequestMapping("/api/notes")
 public class NoteController {
     private final NoteService noteService;
+    private final AuthService authService;
 
-    public NoteController(NoteService noteService) {
+    public NoteController(NoteService noteService, AuthService authService) {
         this.noteService = noteService;
+        this.authService = authService;
     }
 
-    @PreAuthorize("hasRole('MEMBER') OR hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('MEMBER','ADMIN')")
     @PostMapping("/create")
     public NoteDto createNote(@RequestBody @Valid AddNoteDto addNoteDto){
-        NoteDto noteDto = noteService.createNote(addNoteDto);
-        return noteDto;
+        return noteService.createNote(addNoteDto);
     }
 
-    @PreAuthorize("hasRole('MEMBER') OR hasRole('ADMIN')")
-    @GetMapping("/allNotes/{tenant_id}")
-    public List<NoteDto> getAllNotes(@PathVariable Long tenant_id){
-        return noteService.getAllNotes(tenant_id);
+    @PreAuthorize("hasAnyRole('MEMBER','ADMIN')")
+    @GetMapping("/allNotes")
+    public List<NoteDto> getAllNotes(){
+        Long tenantId = AuthService.getCurrentTenantId();
+        return noteService.getAllNotes(tenantId);
     }
 
-    @DeleteMapping("/delete/note_id")
+    @PreAuthorize("hasAnyRole('MEMBER','ADMIN')")
+    @PatchMapping("/update/{noteId}")
+    public NoteDto updateNote(@PathVariable Long noteId, @RequestBody Map<String, Object> update){
+        return noteService.updateNote(noteId, update);
+    }
+
+    @PreAuthorize("hasAnyRole('MEMBER','ADMIN')")
+    @DeleteMapping("/delete/{noteId}")
     public void deleteNote(@PathVariable Long noteId){
         noteService.deleteNote(noteId);
     }
 
-    @GetMapping("/user/{user_id}")
-    public List<NoteDto> getNotesByUser(@PathVariable Long user_id){
-        return noteService.getNotesByUser(user_id);
-    }
-
-    @PatchMapping("/update/{note_id}")
-    public NoteDto updateNote(@PathVariable Long note_id, @RequestBody Map<String, Object> update){
-        return noteService.updateNote(note_id, update);
+    @PreAuthorize("hasAnyRole('MEMBER','ADMIN')")
+    @GetMapping("/user/{userId}")
+    public List<NoteDto> getNotesByUser(@PathVariable Long userId){
+        return noteService.getNotesByUser(userId);
     }
 }

@@ -1,7 +1,6 @@
 package com.notes.app.Scribler.Entity;
 
 import jakarta.persistence.*;
-import org.aspectj.weaver.loadtime.definition.Definition;
 
 import java.time.Instant;
 
@@ -19,9 +18,17 @@ public class Note {
     @Column(nullable = false)
     private java.time.Instant updatedAt;
 
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Long createdBy;
+    private User createdBy;
 
     @ManyToOne
     @JoinColumn(name = "tenant_id")
@@ -56,12 +63,6 @@ public class Note {
     }
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
-    }
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
     }
     public Tenant getTenant() {
         return tenant;

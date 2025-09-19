@@ -6,19 +6,11 @@ import lombok.Data;
 public class AddNoteDto {
     private String title;
     private String content;
-    private Long createdBy;
 
-    public AddNoteDto(String title, String content, Long createdBy) {
+
+    public AddNoteDto(String title, String content) {
         this.title = title;
         this.content = content;
-        this.createdBy = createdBy;
-    }
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
     }
     public String getContent() {
         return content;
